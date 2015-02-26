@@ -1,0 +1,89 @@
+	Ursache Andrei - 3 aprilie 2014
+	
+	
+			Aspecte generale:
+	
+		In realizarea temei am creeat o lista generica ("List.h") pe care o 
+	utilizez pentru obiecte de tip string, ea reprezentand textul din editor sau 
+	clipboard-ul, dar si o stiva generica ("Stack.h") pe care o folosesc pentru 
+	obiecte de tip "Action" (operatii pe cuvinte) pentru realizarea functiilor 
+	Undo si Redo (pentru a nu retine intreg textul la fiecare operatie).
+		Mentionez ca nu am utilizat variabile globale, structuri gata 
+	implementate de STL (inafara de string). 
+	
+	
+			Ideea generala a programului si implementare:
+	
+		Clasa "Action" retine un element de tip string (cuvintele 
+	modificate - fie sterse, fie adaugate), indecsii intre care s-a realizat
+	operatie, precum si tipul acesteia (1 - Add / Paste, 0 - Cut). Cu ajutorul
+	ei, la fiecare apelare a unei functii care aduce modificari imediate asupra
+	textului, se creaza un obiect de tip Action, se initializeaza si se adauga
+	in stiva de obiecte Action, undo. In acest mod, nu retin textul integral in
+	stiva undo la fiecare pas (ar fi fost mai usor, dar total ineficient pentru
+	texte mai mari si pentu operatii multe sau poate chiar imposibil), ci doar
+	cuvintele care au fost modificate. Toate operatiile in afara de Copy si
+	GetText, utilizeaza stiva undo.
+	
+		In clasa Backend am adugat urmatoarele elemente: text (lista de 
+	stringuri care retine textul din editor), clipboard (lista de stringuri 
+	care retine textul la o operatie Cut sau Copy), undo si redo (stive de 
+	elemente Action) si buffer (string, pentru functia GetText).
+	
+	De asemenea in fisierele sura se regaseste si "functions.cpp" in care am 
+	implementat functiile auxiliare programului:
+		getText - returneaza un string format din cuvintele din lista data ca 
+		parametru;
+		getList - pune in lista data cuvintele care se afla in stringul dat ca
+		parametru;
+		getIndex - returneaza indexul valid din lista corespunzator celui dat 
+		(din index pe litere -> index valid pe lista);
+		check - verifica posibilitatea realizarii funciilor Cut / Copy.
+	Mentionez, ca un "cuvant", pentru editor, inseamna atat un nod in sine 
+	(litere) cat si un spatiu la final (de care se tine cont, dar nu este 
+	adaugat).
+	
+		Avand in vedere ca aceasta tema se refera strict la implementarea unor 
+	funcii de modificare sau interogare a textului, am sa vorbesc puncual despre
+	fiecare:
+	
+	1. Cut / Copy :
+		Se sterge in primul rand Clipboard-ul, dupa care se valideaza indecsii
+		pe litere dati ca parametri. Daca acestea sunt valizi, se afla cu 
+		ajutorul functiei getIndex indecsii valizi din lista, dupa care se 
+		apeleaza functia check pentru a verifica daca operatia este posibila. 
+		In caz afirmativ se creeaza un obiect de tip Action (doar in cazul 
+		functiei Cut).
+		
+		Se adauga in clipboard elementele din lista aflate intre indecsii 
+		obtinuti, iar in cazul functiei Cut, se sterg din text cuvintele si 
+		se adauga si in stringul din obiectul Action, dupa care se adauga in 
+		stiva undo.
+
+	2. Paste / Add:
+		Se gaseste indexul valid din lista de cuvinte si incepand de la el se 
+		adauga pe rand cuvantele / cuvantul dat ca input. Se creeaza un obiect 
+		de tip Action, unde similar ca si la Copy / Paste se adauga cuvintele
+		modificate, indecsii si valoarea 1 ca tip de operatie.
+		
+	3. Undo / Redo:
+		Sunt operatii in oglinda. Pentru undo: se verifica daca stiva este 
+		goala. In cazul in care se afla elemente in ea, se scoate actiunea
+		"din varf" si se adauga in redo. Se creeaza o lista care contine 
+		cuvintele din stringul actiunii si se realizeaza pe text, intre 
+		indecsii dati, operatia inversa din actiune. Analog se realizeaza
+		si functia redo.
+	
+	4. GetText:
+		Cu ajutorul functiei getText implementata in functions.cpp se 
+		returneaza textul din lista actuala.
+		
+		Astfel, editorul de text funcioneaza, avand ca unitate de baza pentru
+	procesare, cuvantul ( ~"cu spatiu dupa").
+
+	(!) Alte detalii referitoare la implementarea temei se regasesc in fisierele sursa.
+
+
+	
+	Andrei Ursache
+
