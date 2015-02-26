@@ -4,8 +4,14 @@
 	Proiect anul 1, semestrul al doilea, la materia Structuri de Date.
 	Subiect: Creearea back end-ului pentru un editor de text.
 	Limbaj ales: C++
-	----------------------------------------------------------------------------
 	
+	############################     ATENTIE !!!    ############################
+	Temele sunt verificate pe VMChecker. Nu incercati sa copiati codul, deoarece
+	VMChecker verifica si sursele existente pe GitHub. In plus, fiecare tema va 
+	ajuta foarte mult daca incercati sa o realizati singuri. Asa ca, daca ai
+	ajuns aici pentru a cauta o tema, iti recomand calduros sa inchizi tab-ul cu 
+	GitHub si sa te apuci singur de ea. Spor!
+	----------------------------------------------------------------------------
 	
 			Aspecte generale:
 	
@@ -16,7 +22,6 @@
 	Undo si Redo (pentru a nu retine intreg textul la fiecare operatie).
 		Mentionez ca nu am utilizat variabile globale, structuri gata 
 	implementate de STL (inafara de string). 
-	
 	
 			Ideea generala a programului si implementare:
 	
